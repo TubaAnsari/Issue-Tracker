@@ -1,0 +1,51 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label class="form-label fw-bold">Title *</label>
+    <input type="text" class="form-control" [(ngModel)]="newIssue.title" 
+           name="title" required placeholder="Enter issue title">
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-label fw-bold">Description</label>
+    <textarea class="form-control" [(ngModel)]="newIssue.description" 
+              name="description" rows="3" placeholder="Describe the issue in detail..."></textarea>
+  </div>
+  
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label fw-bold">Status</label>
+      <select class="form-select" [(ngModel)]="newIssue.status" name="status">
+        <option *ngFor="let status of statusOptions" [value]="status">
+          {{ status | titlecase }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label fw-bold">Priority</label>
+      <select class="form-select" [(ngModel)]="newIssue.priority" name="priority">
+        <option *ngFor="let priority of priorityOptions" [value]="priority">
+          {{ priority | titlecase }}
+        </option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="mb-3">
+    <label class="form-label fw-bold">Assignee</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-person"></i></span>
+      <input type="text" class="form-control" [(ngModel)]="newIssue.assignee" 
+             name="assignee" placeholder="assignee@example.com">
+    </div>
+    <div class="form-text">Leave empty if unassigned</div>
+  </div>
+  
+  <div class="d-flex gap-2 pt-3 border-top">
+    <button type="submit" class="btn btn-success">
+      <i class="bi bi-plus-circle me-1"></i>Create Issue
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+      <i class="bi bi-x me-1"></i>Cancel
+    </button>
+  </div>
+</form>

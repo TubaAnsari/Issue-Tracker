@@ -1,0 +1,252 @@
+/* Enhanced Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa !important;
+  margin: 0;
+  padding: 20px;
+  color: #212529 !important;
+}
+
+.badge.bg-warning { 
+  background-color: #ffc107 !important; 
+  color: #000 !important; 
+}
+
+.badge.bg-info { 
+  background-color: #0dcaf0 !important; 
+  color: #000 !important; 
+}
+
+.badge.bg-success { 
+  background-color: #198754 !important; 
+  color: #fff !important;
+}
+
+.badge.bg-danger { 
+  background-color: #dc3545 !important; 
+  color: #fff !important;
+}
+
+.badge.bg-primary { 
+  background-color: #0d6efd !important; 
+  color: #fff !important;
+}
+
+.badge.bg-secondary { 
+  background-color: #6c757d !important; 
+  color: #fff !important;
+}
+
+/* Force Bootstrap container styling */
+.container-fluid {
+  background-color: white !important;
+  padding: 20px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Ensure table styling */
+.table {
+  color: #212529 !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1) !important;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+.table th {
+  border-top: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  padding: 1rem 0.75rem;
+}
+
+.table td {
+  padding: 1rem 0.75rem;
+  vertical-align: middle;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.issue-row:hover {
+  background-color: rgba(13, 110, 253, 0.04) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.badge {
+  font-size: 0.75em;
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+}
+
+/* Status and Priority badges with icons */
+.badge i {
+  font-size: 0.8em;
+}
+
+/* Modal enhancements */
+.modal-content {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Pagination */
+.pagination .page-link {
+  border: none;
+  color: #6c757d;
+  margin: 0 0.125rem;
+  border-radius: 0.5rem;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.pagination .active .page-link {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/* Form controls */
+.form-control, .form-select {
+  border-radius: 0.5rem;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  border-color: #86b7fe;
+}
+
+/* Button enhancements */
+.btn {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Table sorting indicators */
+th[style*="cursor: pointer"]:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 0.5rem;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  /* Enhanced sorting headers */
+.sortable-header {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.sortable-header:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.sortable-header .bi {
+  font-size: 0.8em;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.sortable-header:hover .bi {
+  opacity: 1;
+}
+
+/* Issue row hover effects */
+.issue-row {
+  transition: all 0.2s ease;
+}
+
+.issue-row:hover {
+  background-color: rgba(13, 110, 253, 0.04) !important;
+  transform: translateY(-1px);
+}
+
+/* Timeline styling for issue detail */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0.5rem;
+  width: 1px;
+  height: calc(100% + 1rem);
+  background-color: #dee2e6;
+}
+
+.timeline-item:last-child:before {
+  display: none;
+}
+
+.timeline-item i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  margin-top: 0.1rem;
+  z-index: 1;
+  background: white;
+  padding-right: 0.5rem;
+}
+
+/* Badge enhancements */
+.badge {
+  font-size: 0.75em;
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+}
+
+.badge i {
+  font-size: 0.8em;
+}
+
+}
+

@@ -1,0 +1,215 @@
+<div class="container mt-4" *ngIf="!loading && !error">
+  <!-- Back Button -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0)" (click)="onClose()" class="text-decoration-none">
+          <i class="bi bi-arrow-left me-1"></i>Back to Issues
+        </a>
+      </li>
+      <li class="breadcrumb-item active">Issue #{{ issue.id }}</li>
+    </ol>
+  </nav>
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="mb-1">
+        <i class="bi bi-bug text-primary me-2"></i>Issue #{{ issue.id }}
+      </h4>
+      <p class="text-muted mb-0">Created {{ issue.created_at | date:'MMM d, y' }}</p>
+    </div>
+    <button class="btn btn-outline-secondary btn-sm" (click)="onClose()">
+      <i class="bi bi-x-lg me-1"></i>Close
+    </button>
+  </div>
+
+  <!-- View Mode -->
+  <div *ngIf="!isEditing">
+    <!-- Basic Info -->
+    <div class="card mb-4">
+      <div class="card-header bg-light">
+        <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Basic Information</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold">Title</label>
+            <p class="mb-0">{{ issue.title }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold">Assignee</label>
+            <p class="mb-0">
+              <i class="bi bi-person me-1"></i>
+              {{ issue.assignee || 'Unassigned' }}
+            </p>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Description</label>
+          <p class="mb-0">{{ issue.description || 'No description provided' }}</p>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Status</label>
+            <div>
+              <span class="badge" [ngClass]="getStatusBadgeClass(issue.status)">
+                <i class="bi me-1" [ngClass]="getStatusIcon(issue.status)"></i>
+                {{ issue.status | titlecase }}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Priority</label>
+            <div>
+              <span class="badge" [ngClass]="getPriorityBadgeClass(issue.priority)">
+                <i class="bi me-1" [ngClass]="getPriorityIcon(issue.priority)"></i>
+                {{ issue.priority | titlecase }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card">
+      <div class="card-header bg-light">
+        <h6 class="mb-0"><i class="bi bi-clock me-2"></i>Timeline</h6>
+      </div>
+      <div class="card-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <i class="bi bi-plus-circle text-success"></i>
+            <div>
+              <strong>Created</strong>
+              <p class="mb-0 text-muted">{{ issue.created_at | date:'MMM d, y, h:mm a' }}</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <i class="bi bi-pencil text-primary"></i>
+            <div>
+              <strong>Last Updated</strong>
+              <p class="mb-0 text-muted">{{ issue.updated_at | date:'MMM d, y, h:mm a' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex gap-2 mt-4">
+      <button class="btn btn-primary" (click)="startEdit()">
+        <i class="bi bi-pencil me-1"></i>Edit Issue
+      </button>
+      <button class="btn btn-outline-secondary" (click)="reloadIssue()">
+        <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+      </button>
+      <button class="btn btn-outline-secondary" (click)="onClose()">
+        <i class="bi bi-x me-1"></i>Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Edit Mode -->
+  <div *ngIf="isEditing">
+    <form (ngSubmit)="saveEdit()" class="card">
+      <div class="card-header bg-warning text-dark">
+        <h6 class="mb-0"><i class="bi bi-pencil me-2"></i>Edit Issue</h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Title *</label>
+          <input type="text" class="form-control" [(ngModel)]="editForm.title" name="title" required>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Description</label>
+          <textarea class="form-control" [(ngModel)]="editForm.description" name="description" rows="3" 
+                    placeholder="Add a detailed description..."></textarea>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Status</label>
+            <select class="form-select" [(ngModel)]="editForm.status" name="status">
+              <option *ngFor="let status of statusOptions" [value]="status">
+                {{ status | titlecase }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Priority</label>
+            <select class="form-select" [(ngModel)]="editForm.priority" name="priority">
+              <option *ngFor="let priority of priorityOptions" [value]="priority">
+                {{ priority | titlecase }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Assignee</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="editForm.assignee" name="assignee" 
+                   placeholder="Enter email address">
+          </div>
+        </div>
+        
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-lg me-1"></i>Save Changes
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancelEdit()">
+            <i class="bi bi-x me-1"></i>Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Raw JSON Data -->
+  <div class="card mt-4">
+    <div class="card-header bg-light">
+      <h6 class="mb-0">
+        <i class="bi bi-code me-2"></i>Raw JSON Data
+        <button class="btn btn-sm btn-outline-secondary float-end" 
+                (click)="copyJson()" title="Copy JSON">
+          <i class="bi bi-clipboard"></i>
+        </button>
+      </h6>
+    </div>
+    <div class="card-body">
+      <pre class="bg-dark text-light p-3 small rounded">{{ issue | json }}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="loading" class="container mt-4">
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">Loading issue details...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div *ngIf="error && !loading" class="container mt-4">
+  <div class="alert alert-danger">
+    <h5><i class="bi bi-exclamation-triangle me-2"></i>Error</h5>
+    <p class="mb-0">{{ error }}</p>
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-outline-danger" (click)="reloadIssue()">
+        <i class="bi bi-arrow-clockwise me-1"></i>Retry
+      </button>
+      <button class="btn btn-secondary" (click)="onClose()">
+        <i class="bi bi-arrow-left me-1"></i>Back to Issues
+      </button>
+    </div>
+  </div>
+</div>

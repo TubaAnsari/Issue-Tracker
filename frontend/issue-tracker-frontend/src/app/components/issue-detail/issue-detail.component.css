@@ -1,0 +1,35 @@
+/* Timeline styling */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0.5rem;
+  width: 1px;
+  height: calc(100% + 1rem);
+  background-color: #dee2e6;
+}
+
+.timeline-item:last-child:before {
+  display: none;
+}
+
+.timeline-item i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  margin-top: 0.1rem;
+  z-index: 1;
+  background: white;
+  padding-right: 0.5rem;
+}
