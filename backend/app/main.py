@@ -10,7 +10,7 @@ app = FastAPI(title="Issue Tracker API", version="1.0.0")
 # Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # Angular dev server
+    allow_origins=["http://localhost:4200", "http://frontend:4200"],  # Angular dev server & docker
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
